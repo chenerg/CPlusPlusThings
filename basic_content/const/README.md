@@ -334,7 +334,7 @@ int main(){
 ```
 > 编译： g++ -o main main.cpp apple.cpp<br>
 
-此时报错，上面getCount()方法中调用了一个add方法，而add方法并非const修饰，所以运行报错。也就是说const成员函数只能访问const成员函数。
+此时报错，上面getCount()方法中调用了一个add方法，而add方法并非const修饰，所以运行报错。也就是说const成员函数只能访问const成员函数。**这主要是因为const函数隐含的第一个变量this是const修饰的，所以不可以传入非const的参数**
 
 当调用改为：
 
@@ -342,23 +342,20 @@ int main(){
 const Apple b(3);
 b.add(); // error
 ```
-此时，可以证明的是const对象只能访问const成员函数。
+
 
 我们除了上述的初始化const常量用初始化列表方式外，也可以通过下面方法：
 
-第一：将常量定义与static结合，也就是：
+
+1.利用static的定义方式
 
 ```cpp
 static const int apple_number
-```
 
-第二：在外面初始化：
-
-```cpp
 const int Apple::apple_number=10;
 ```
 
-当然，如果你使用c++11进行编译，直接可以在定义出初始化，可以直接写成：
+2.如果使用c++11进行编译，直接可以在定义出初始化：
 
 ```cpp
 static const int apple_number=10;
